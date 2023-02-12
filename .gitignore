@@ -9,6 +9,8 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
+assets/WhatsApp - Asset Bundle
+data/
 
 # macOS
 .DS_Store

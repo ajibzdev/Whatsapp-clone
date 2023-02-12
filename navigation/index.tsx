@@ -16,6 +16,9 @@ import { ColorSchemeName, Pressable } from "react-native";
 
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
+import ChatListScreen from "../screens/ChatListScreen";
+import ChatScreen from "../screens/ChatScreen";
+
 import ModalScreen from "../screens/ModalScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import TabOneScreen from "../screens/TabOneScreen";
@@ -34,8 +37,8 @@ export default function Navigation({
 }) {
   return (
     <NavigationContainer
-      linking={LinkingConfiguration}
-      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+    // linking={LinkingConfiguration}
+    // theme={colorScheme === "dark" ? DefaultTheme : DefaultTheme}
     >
       <RootNavigator />
     </NavigationContainer>
@@ -56,6 +59,8 @@ function RootNavigator() {
         component={BottomTabNavigator}
         options={{ headerShown: false }}
       />
+
+      <Stack.Screen name="ChatScreen" component={ChatScreen} />
       <Stack.Screen
         name="NotFound"
         component={NotFoundScreen}
@@ -79,19 +84,20 @@ function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="Chat"
+      initialRouteName="ChatList"
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme].tint,
+        // tabBarActiveTintColor: Colors[colorScheme].tint,
         headerShown: false,
       }}
     >
       <BottomTab.Screen
-        name="Chat"
-        component={TabOneScreen}
-        options={({ navigation }: RootTabScreenProps<"TabOne">) => ({
+        name="ChatList"
+        component={ChatListScreen}
+        options={({ navigation }: RootTabScreenProps<"ChatList">) => ({
           title: "Chat Screen ",
         })}
       />
+
       <BottomTab.Screen
         name="TabTwo"
         component={TabTwoScreen}

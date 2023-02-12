@@ -1,26 +1,49 @@
-import { StyleSheet, Text, View } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableWithoutFeedback,
+} from "react-native";
 import React from "react";
+import { ChatType } from "../../types";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import { useNavigation } from "@react-navigation/native";
+dayjs.extend(relativeTime);
 
-const ChatListItem = () => {
+const ChatListItem = ({ user, lastMessage, id }: ChatType) => {
+  const navigation = useNavigation();
+
   return (
-    <View style={styles.container}>
-      <Image
-        source={{ uri: "https://unsplash.com/photos/DwGJEhvNzzI" }}
-        style={styles.image}
-      />
+    <TouchableWithoutFeedback
+      onPress={() => {
+        navigation.navigate("ChatScreen");
+      }}
+    >
+      <View style={styles.container}>
+        <Image
+          source={{
+            uri: user.image,
+          }}
+          style={styles.image}
+        />
 
-      <View style={styles.content}>
-        <View style={styles.row}>
-          <Text style={styles.name} numberOfLines={1}>
-            Lukas
+        <View style={styles.content}>
+          <View style={styles.row}>
+            <Text style={styles.name} numberOfLines={1}>
+              {user.name}
+            </Text>
+            <Text style={styles.subTitle}>
+              {dayjs(lastMessage.createdAt).fromNow(true)}
+            </Text>
+          </View>
+          <Text style={styles.subTitle} numberOfLines={2}>
+            {lastMessage.text}
           </Text>
-          <Text style={styles.subTitle}>8:33</Text>
         </View>
-        <Text style={styles.subTitle} numberofLines={2}>
-          Last Message
-        </Text>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -37,6 +60,8 @@ const styles = StyleSheet.create({
   image: {
     width: 60,
     height: 60,
+    borderRadius: 60,
+    resizeMode: "cover",
     marginRight: 10,
   },
   content: {
@@ -48,6 +73,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     marginBottom: 5,
+    alignItems: "center",
   },
   name: {
     flex: 1,
